@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -8,6 +8,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { S3Module } from './s3/s3.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { StripeModule } from './stripe/stripe.module';
+import { RawBodyMiddleware } from './middlewares/raw-body.middleware';
+import { JsonBodyMiddleware } from './middlewares/json-body.middleware';
+import { WebhookModule } from './webhook/webhook.module';
+import { MailModule } from './mail/mail.module';
+import { SessionModule } from './session/session.module';
 
 @Module({
   imports: [
@@ -25,10 +31,26 @@ import { AuthModule } from './auth/auth.module';
       inject: [ConfigService],
     }),
     S3Module,
+    StripeModule,
     AuthModule,
     UserModule,
+    WebhookModule,
+    MailModule,
+    SessionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RawBodyMiddleware).forRoutes({
+      path: 'v1/stripe/webhooks',
+      method: RequestMethod.POST,
+    });
+
+    consumer
+      .apply(JsonBodyMiddleware)
+      .exclude('v1/stripe/webhooks')
+      .forRoutes('*');
+  }
+}
