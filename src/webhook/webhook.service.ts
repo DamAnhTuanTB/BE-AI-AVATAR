@@ -27,7 +27,6 @@ export class WebhookService {
             urlDownload: `${this.configService.get(
               'API_SERVER',
             )}/v1/session/download/${body.sessionId}`,
-            urlUnsubscribe: '',
           },
         });
       case AvatarEvent.ERROR:

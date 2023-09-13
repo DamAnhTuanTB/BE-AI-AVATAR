@@ -6,8 +6,6 @@ import configuration from './configs';
 import { HttpModule } from '@nestjs/axios';
 import { MongooseModule } from '@nestjs/mongoose';
 import { S3Module } from './s3/s3.module';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
 import { StripeModule } from './stripe/stripe.module';
 import { RawBodyMiddleware } from './middlewares/raw-body.middleware';
 import { JsonBodyMiddleware } from './middlewares/json-body.middleware';
@@ -32,8 +30,6 @@ import { SessionModule } from './session/session.module';
     }),
     S3Module,
     StripeModule,
-    AuthModule,
-    UserModule,
     WebhookModule,
     MailModule,
     SessionModule,

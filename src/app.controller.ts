@@ -11,16 +11,16 @@ export class AppController {
 
   @Get()
   getHello() {
-    // return this.mailService.sendMail({
-    //   to: 'anhtuantb2422@gmail.com',
-    //   subject: 'AI Avatar - Your Result',
-    //   template: './result',
-    //   context: {
-    //     name: 'you',
-    //     urlDownload:
-    //       'https://0497-222-252-18-109.ngrok-free.app/nextapi/v1/session/download/8dlU1IWzXjLn22b',
-    //     urlUnsubscribe: '',
-    //   },
-    // });
+    return this.mailService.sendMail({
+      to: 'anhtuantb2422@gmail.com',
+      subject: 'AI Avatar - Your Result',
+      template: './result',
+      context: {
+        name: 'you',
+        urlDownload:
+          'https://0497-222-252-18-109.ngrok-free.app/nextapi/v1/session/download/8dlU1IWzXjLn22b',
+        urlUnsubscribe: '',
+      },
+    });
   }
 }
