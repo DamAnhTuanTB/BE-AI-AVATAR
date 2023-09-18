@@ -47,7 +47,7 @@ export class StripeController {
       );
     const result = await this.stripeService.listenWebhooks(
       stripeSignature,
-      req.body.toString(),
+      req.body,
     );
     return result;
   }
