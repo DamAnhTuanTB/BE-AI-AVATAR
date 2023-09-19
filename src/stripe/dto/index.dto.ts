@@ -1,7 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
+export enum TypePriceEnum {
+  MAIN = 'main',
+}
 export class CreateOrderDto {
   @IsNotEmpty()
   @ApiProperty({ required: true })
@@ -26,4 +29,16 @@ export class CreateOrderDto {
   @IsString()
   @Expose()
   userId: string;
+}
+
+export class QueryGetListPriceDto {
+  @IsNotEmpty()
+  @ApiProperty({
+    required: true,
+    enum: TypePriceEnum,
+    enumName: 'TypePriceEnum',
+  })
+  @IsEnum(TypePriceEnum)
+  @Expose()
+  type: TypePriceEnum;
 }

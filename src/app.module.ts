@@ -12,6 +12,7 @@ import { JsonBodyMiddleware } from './middlewares/json-body.middleware';
 import { WebhookModule } from './webhook/webhook.module';
 import { MailModule } from './mail/mail.module';
 import { SessionModule } from './session/session.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { SessionModule } from './session/session.module';
     WebhookModule,
     MailModule,
     SessionModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

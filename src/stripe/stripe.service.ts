@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { handleError } from 'src/utils';
 import Stripe from 'stripe';
-import { CreateOrderDto } from './dto/index.dto';
+import { CreateOrderDto, QueryGetListPriceDto } from './dto/index.dto';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class StripeService {
   stripe: Stripe;
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly userService: UserService,
+    private readonly configService: ConfigService,
+  ) {
     this.stripe = new Stripe(
       configService.get<string>('PAYMENT.STRIPE_SECRET_KEY'),
       {
@@ -16,10 +20,15 @@ export class StripeService {
     );
   }
 
-  async getPrices() {
+  async getPrices(query: QueryGetListPriceDto) {
     try {
       const prices = await this.stripe.prices.list({ active: true });
-      return prices.data;
+
+      return prices.data
+        .filter((item: any) => item.metadata.type === query.type)
+        .sort(
+          (a: any, b: any) => a.metadata.priceOrder - b.metadata.priceOrder,
+        );
     } catch (error) {
       handleError(error);
     }
@@ -40,7 +49,7 @@ export class StripeService {
       });
       const paymentUrl =
         paymentLinks.url +
-        `?prefilled_email=${email}&client_reference_id=${userId}`;
+        `?prefilled_email=${email}&client_reference_id=${userId}&customer_email=${email}`;
       return { url: paymentUrl };
     } catch (error) {
       handleError(error);
@@ -59,9 +68,26 @@ export class StripeService {
       );
       const data = event?.data;
       const eventType = event.type || '';
+      console.log('eventType', eventType);
       switch (eventType) {
         case 'checkout.session.completed':
+          const userId = data?.object?.client_reference_id || '';
+          console.log('userId', userId);
+          const detailPrice = await this.stripe.checkout.sessions.retrieve(
+            data.object.id,
+            {
+              expand: ['line_items.data'],
+            },
+          );
+          console.log('detailPrice', detailPrice?.line_items?.data[0].price);
+          // this.userService
+          // console.log('detailPrice', detailPrice);
           console.log('checkout success', data);
+          this.userService.updateUserWhenPaymentSuccess({
+            email: data?.object?.customer_details?.email,
+            userId,
+            priceInfo: detailPrice?.line_items?.data[0].price,
+          });
         default:
           break;
       }

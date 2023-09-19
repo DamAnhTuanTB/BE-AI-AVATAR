@@ -8,11 +8,12 @@ import {
   Post,
   RawBodyRequest,
   Req,
+  Query,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 import { StripeService } from './stripe.service';
-import { CreateOrderDto } from './dto/index.dto';
+import { CreateOrderDto, QueryGetListPriceDto } from './dto/index.dto';
 import { MissStripeSignature } from 'src/utils/message';
 
 @ApiTags('Stripe')
@@ -25,8 +26,8 @@ export class StripeController {
 
   @Get('prices')
   @HttpCode(HttpStatus.OK)
-  async getPrices() {
-    return this.stripeService.getPrices();
+  async getPrices(@Query() query: QueryGetListPriceDto) {
+    return this.stripeService.getPrices(query);
   }
 
   @Post('order')
@@ -38,7 +39,6 @@ export class StripeController {
   @Post('webhooks')
   @HttpCode(HttpStatus.CREATED)
   async listenWebhooks(@Req() req: RawBodyRequest<Request>) {
-    console.log('body', req.body);
     const stripeSignature = req.header('stripe-signature');
     if (!stripeSignature)
       throw new HttpException(
