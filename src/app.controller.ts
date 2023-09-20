@@ -12,7 +12,7 @@ export class AppController {
   @Get()
   getHello() {
     return this.mailService.sendMail({
-      to: 'anhtuantb2422@gmail.com',
+      to: 'hello@avatarist.ai',
       subject: 'AI Avatar - Your Result',
       template: './result',
       context: {
