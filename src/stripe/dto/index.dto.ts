@@ -4,6 +4,8 @@ import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export enum TypePriceEnum {
   MAIN = 'main',
+  SALE25 = 'sale25',
+  SALE50 = 'sale50',
 }
 export class CreateOrderDto {
   @IsNotEmpty()

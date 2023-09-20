@@ -11,7 +11,7 @@ async function bootstrap() {
   app.enableVersioning({
     type: VersioningType.URI,
   });
-  app.setGlobalPrefix('nextapi', {
+  app.setGlobalPrefix('api', {
     exclude: ['/health'],
   });
 

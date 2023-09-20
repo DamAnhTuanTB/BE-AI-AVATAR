@@ -3,6 +3,8 @@ import { AvatarEvent } from './dto/index.dto';
 import { ConfigService } from '@nestjs/config';
 import { MailService } from 'src/mail/mail.service';
 import { SessionService } from 'src/session/session.service';
+import { TypeSessionStatus } from 'src/session/model/session.model';
+import axios from 'axios';
 
 @Injectable()
 export class WebhookService {
@@ -18,7 +20,7 @@ export class WebhookService {
           body.sessionId,
         );
 
-        return this.mailService.sendMail({
+        this.mailService.sendMail({
           to: sessionDetail.email,
           subject: 'AI Avatar - Your Result',
           template: './result',
@@ -29,6 +31,24 @@ export class WebhookService {
             )}/v1/session/download/${body.sessionId}`,
           },
         });
+
+        const res = await axios.get(
+          this.configService.get<string>('API_AI_AVATAR') + '/v1/sessions',
+          {
+            params: {
+              sessionId: body.sessionId,
+            },
+          },
+        );
+
+        const results = res.data?.data?.session?.results;
+
+        return this.sessionService.updateSession(body.sessionId, {
+          status: TypeSessionStatus.COMPLETE,
+          results,
+          updatedAt: new Date(),
+        });
+
       case AvatarEvent.ERROR:
         break;
       default:
