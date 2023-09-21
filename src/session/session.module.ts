@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SessionSchema } from './model/session.model';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from 'src/user/user.module';
 @Module({
   imports: [
     ConfigModule,
@@ -13,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
         schema: SessionSchema,
       },
     ]),
+    UserModule,
   ],
   controllers: [SessionController],
   providers: [SessionService],

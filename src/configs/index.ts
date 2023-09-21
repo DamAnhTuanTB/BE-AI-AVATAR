@@ -23,4 +23,5 @@ export default () => ({
   },
   API_AI_AVATAR: process.env.API_AI_AVATAR,
   API_SERVER: process.env.API_SERVER,
+  AUTH_URI: process.env.AUTH_URI,
 });

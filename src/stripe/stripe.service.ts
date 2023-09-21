@@ -72,17 +72,12 @@ export class StripeService {
       switch (eventType) {
         case 'checkout.session.completed':
           const userId = data?.object?.client_reference_id || '';
-          console.log('userId', userId);
           const detailPrice = await this.stripe.checkout.sessions.retrieve(
             data.object.id,
             {
               expand: ['line_items.data'],
             },
           );
-          console.log('detailPrice', detailPrice?.line_items?.data[0].price);
-          // this.userService
-          // console.log('detailPrice', detailPrice);
-          console.log('checkout success', data);
           this.userService.updateUserWhenPaymentSuccess({
             email: data?.object?.customer_details?.email,
             userId,
