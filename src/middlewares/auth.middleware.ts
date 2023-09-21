@@ -30,6 +30,7 @@ export class AuthMiddleware implements NestMiddleware {
         )
         .pipe(
           catchError((error: AxiosError) => {
+            console.log('error', error);
             throw new HttpException(Unauthorized, HttpStatusCode.Unauthorized);
           }),
         ),

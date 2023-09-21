@@ -49,6 +49,12 @@ export class CreateSessionDto {
   @IsString()
   @Expose()
   originFirstImage: string;
+
+  @IsNotEmpty()
+  @ApiProperty({ required: true })
+  @IsString()
+  @Expose()
+  timePayment: string;
 }
 
 export class UpdateSessionDto {

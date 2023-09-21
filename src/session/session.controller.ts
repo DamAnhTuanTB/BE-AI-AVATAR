@@ -30,7 +30,7 @@ export class SessionController {
   @Post('')
   @HttpCode(HttpStatus.CREATED)
   async createSession(@Body() body: CreateSessionDto, @Req() req: any) {
-    return this.sessionService.createSession(body, 'abc');
+    return this.sessionService.createSession(body, req.query.userId);
   }
 
   @Put(':id')
@@ -63,7 +63,7 @@ export class SessionController {
   @Get('')
   @HttpCode(HttpStatus.OK)
   async getListSession(@Req() req: any) {
-    return this.sessionService.getListSession('abc');
+    return this.sessionService.getListSession(req.query.userId);
   }
   // @Get('profile')
   // getProfile(@User() user: CreateUserDto) {

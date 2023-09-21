@@ -19,4 +19,9 @@ export class UpdateInfoUserDto {
   @ApiPropertyOptional()
   @Expose()
   userInfo: any;
+
+  @IsOptional()
+  @ApiPropertyOptional()
+  @Expose()
+  listGenerate: any;
 }

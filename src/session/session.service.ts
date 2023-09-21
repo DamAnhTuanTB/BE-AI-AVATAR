@@ -10,6 +10,8 @@ import {
 import * as archiver from 'archiver';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
+import { UserService } from 'src/user/user.service';
+import { UpdateInfoUserDto } from 'src/user/dto/index.dto';
 
 @Injectable()
 export class SessionService {
@@ -17,8 +19,30 @@ export class SessionService {
     @InjectModel('Session')
     private readonly SessionModel: Model<SessionDocument>,
     private readonly configService: ConfigService,
+    private readonly userService: UserService,
   ) {}
   async createSession(body: CreateSessionDto, userId: string) {
+    const userDetail = await this.userService.getDetailUser(userId);
+    const listGenerate = userDetail.listGenerate;
+    listGenerate.forEach((item: any, index: number) => {
+      // console.log(
+      //   new Date(item.timePayment).toISOString(),
+      //   new Date(body.timePayment).toISOString(),
+      //   new Date(item.timePayment).toISOString() ===
+      //     new Date(body.timePayment).toISOString(),
+      // );
+      if (
+        new Date(item.timePayment).toISOString() ===
+        new Date(body.timePayment).toISOString()
+      ) {
+        listGenerate[index].used = true;
+      }
+    });
+
+    await this.userService.updateInfoUser(userId, {
+      listGenerate,
+    } as UpdateInfoUserDto);
+
     return this.SessionModel.create({
       ...body,
       userId,
