@@ -64,23 +64,30 @@ export class UserService {
 
   async updateUserWhenPaymentSuccess(body: any) {
     const { email, priceInfo, userId } = body;
-    const user = await this.UserModel.findOne({ email });
-    if (user) {
-      const listGenerate = user.listGenerate;
+    const userByEmail = await this.UserModel.findOne({ email });
+    const userByUserId = await this.UserModel.findOne({ userId });
+    if (userByUserId) {
+      const listGenerate = userByUserId.listGenerate;
       listGenerate.push({
         used: false,
         priority: listGenerate.length + 1,
         timePayment: new Date(),
         priceInfo,
       });
-      await this.UserModel.updateOne(
-        { email: body.email },
-        { listGenerate, userId },
-      );
+      await this.UserModel.updateOne({ userId }, { listGenerate });
+    } else if (userByEmail) {
+      const listGenerate = userByEmail.listGenerate;
+      listGenerate.push({
+        used: false,
+        priority: listGenerate.length + 1,
+        timePayment: new Date(),
+        priceInfo,
+      });
+      await this.UserModel.updateOne({ email }, { listGenerate, userId });
     } else {
       await this.UserModel.create({
         userId,
-        email: body.email,
+        email,
         active: false,
         listGenerate: [
           {
