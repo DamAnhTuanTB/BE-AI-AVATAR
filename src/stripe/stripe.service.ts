@@ -22,12 +22,13 @@ export class StripeService {
 
   async getPrices(query: QueryGetListPriceDto) {
     try {
-      const prices = await this.stripe.prices.list({ active: true });
+      const prices = await this.stripe?.prices?.list({ active: true });
+      console.log('prices', prices);
 
       return prices.data
-        .filter((item: any) => item.metadata.type === query.type)
+        .filter((item: any) => item?.metadata?.type === query?.type)
         .sort(
-          (a: any, b: any) => a.metadata.priceOrder - b.metadata.priceOrder,
+          (a: any, b: any) => a?.metadata?.priceOrder - b?.metadata?.priceOrder,
         );
     } catch (error) {
       handleError(error);
