@@ -56,6 +56,7 @@ export class AppModule {
         'v1/session/download-all-image-with-style',
         'v1/user/check-user-exist/:id',
         'v1/presign-link',
+        // 'v1/session/send-mail',
       )
       .forRoutes('*');
 
