@@ -45,6 +45,8 @@ export class SessionService {
 
     return this.SessionModel.create({
       ...body,
+      createdAt: new Date(),
+      updatedAt: new Date(),
       userId,
       originFirstImage:
         this.configService.get('AWS.CDN') + '/' + body.originFirstImage,
