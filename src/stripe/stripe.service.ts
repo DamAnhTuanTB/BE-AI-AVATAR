@@ -23,10 +23,13 @@ export class StripeService {
   async getPrices(query: QueryGetListPriceDto) {
     try {
       const prices = await this.stripe?.prices?.list({ active: true });
-      // console.log('prices', prices);
 
       return prices.data
-        .filter((item: any) => item?.metadata?.type === query?.type)
+        .filter(
+          (item: any) =>
+            item?.metadata?.type === query?.type &&
+            item?.metadata?.label === 'ai-avatar',
+        )
         .sort(
           (a: any, b: any) => a?.metadata?.priceOrder - b?.metadata?.priceOrder,
         );
@@ -79,11 +82,18 @@ export class StripeService {
               expand: ['line_items.data'],
             },
           );
-          this.userService.updateUserWhenPaymentSuccess({
-            email: data?.object?.customer_details?.email,
-            userId,
-            priceInfo: detailPrice?.line_items?.data[0].price,
-          });
+
+          if (
+            detailPrice?.line_items?.data[0].price?.metadata?.label ===
+            'ai-avatar'
+          ) {
+            this.userService.updateUserWhenPaymentSuccess({
+              email: data?.object?.customer_details?.email,
+              userId,
+              priceInfo: detailPrice?.line_items?.data[0].price,
+            });
+          }
+
         default:
           break;
       }
