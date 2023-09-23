@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const formatedResponse = (data: any) => {
-  const id = data._id.toString() || data.id;
+  const id = data?._id?.toString() || data?.id;
   const dataFormated = { ...data, id };
   delete dataFormated['_id'];
   delete dataFormated['__v'];
