@@ -14,7 +14,6 @@ export class WebhookService {
     private readonly sessionService: SessionService,
   ) {}
   async listenWebhook(body: any) {
-    console.log('co su kien webhook');
     switch (body.event) {
       case AvatarEvent.AVATAR_RESULT:
         const sessionDetail = await this.sessionService.getDetailSession(
@@ -41,8 +40,6 @@ export class WebhookService {
             },
           },
         );
-
-        console.log('chay webhook', res?.data?.data);
 
         const results = res.data?.data?.session?.results;
 
