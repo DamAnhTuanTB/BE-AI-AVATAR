@@ -14,6 +14,7 @@ import { MailModule } from './mail/mail.module';
 import { SessionModule } from './session/session.module';
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
+import { LoggerMiddleware } from './middlewares/logging.middleware';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
     consumer
       .apply(AuthMiddleware)
       .exclude(
