@@ -23,7 +23,7 @@ export class StripeService {
   async getPrices(query: QueryGetListPriceDto) {
     try {
       const prices = await this.stripe?.prices?.list({ active: true });
-      console.log('prices', prices);
+      // console.log('prices', prices);
 
       return prices.data
         .filter((item: any) => item?.metadata?.type === query?.type)
