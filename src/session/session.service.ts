@@ -6,12 +6,14 @@ import { SessionDocument } from './model/session.model';
 import {
   CreateSessionDto,
   QueryDownloadAllAvatarWithStyleDto,
+  SendMailDto,
 } from './dto/index.dto';
 import * as archiver from 'archiver';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from 'src/user/user.service';
 import { UpdateInfoUserDto } from 'src/user/dto/index.dto';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class SessionService {
@@ -20,6 +22,7 @@ export class SessionService {
     private readonly SessionModel: Model<SessionDocument>,
     private readonly configService: ConfigService,
     private readonly userService: UserService,
+    private readonly mailService: MailService,
   ) {}
   async createSession(body: CreateSessionDto, userId: string) {
     const userDetail = await this.userService.getDetailUser(userId);
@@ -166,7 +169,8 @@ export class SessionService {
     return {
       data: listSession.map((item: any) => formatedResponse(item)),
     };
-    // console.log(listSession);
-    // return this.SessionModel.find;
+  }
+  async sendMail(body: SendMailDto, user: any) {
+    return this.mailService.sendMail({ ...body, to: user.email });
   }
 }

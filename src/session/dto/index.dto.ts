@@ -115,3 +115,23 @@ export class QueryDownloadAllAvatarWithStyleDto {
   @Expose()
   style: string;
 }
+
+export class SendMailDto {
+  @IsOptional()
+  @ApiPropertyOptional()
+  @IsString()
+  @Expose()
+  to: string;
+
+  @IsNotEmpty()
+  @ApiProperty({ required: true })
+  @IsString()
+  @Expose()
+  subject: string;
+
+  @IsNotEmpty()
+  @ApiProperty({ required: true })
+  @IsString()
+  @Expose()
+  template: string;
+}

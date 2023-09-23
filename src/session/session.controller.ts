@@ -11,15 +11,17 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SessionService } from './session.service';
 import {
   CreateSessionDto,
   QueryDownloadAllAvatarWithStyleDto,
+  SendMailDto,
   UpdateSessionDto,
 } from './dto/index.dto';
 
 @ApiTags('Session')
+@ApiBearerAuth()
 @Controller({
   path: 'session',
   version: '1',
@@ -64,6 +66,12 @@ export class SessionController {
   @HttpCode(HttpStatus.OK)
   async getListSession(@Req() req: any) {
     return this.sessionService.getListSession(req.query.userId);
+  }
+
+  @Post('send-mail')
+  @HttpCode(HttpStatus.OK)
+  async sendMail(@Body() body: SendMailDto, @Req() req: any) {
+    return this.sessionService.sendMail(body, req.query.user);
   }
   // @Get('profile')
   // getProfile(@User() user: CreateUserDto) {
