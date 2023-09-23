@@ -8,11 +8,15 @@ export class MailService {
 
   async sendMail(payload: SendMail) {
     const { to, subject, template, context } = payload;
-    await this.mailerService.sendMail({
-      to,
-      subject,
-      template,
-      context,
-    });
+    try {
+      await this.mailerService.sendMail({
+        to,
+        subject,
+        template,
+        context,
+      });
+    } catch (error) {
+      console.log('Error mail', error?.response);
+    }
   }
 }
