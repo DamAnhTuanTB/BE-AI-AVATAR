@@ -15,7 +15,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SessionService } from './session.service';
 import {
   CreateSessionDto,
-  QueryDownloadAllAvatarWithStyleDto,
+  QueryDownloadAvatarDto,
+  QueryDownloadImageDto,
   SendMailDto,
   UpdateSessionDto,
 } from './dto/index.dto';
@@ -41,13 +42,25 @@ export class SessionController {
     return this.sessionService.updateSession(id, body);
   }
 
-  @Get('download-all-image-with-style')
+  @Get('remove-originFirstImage-and-add-originImages')
   @HttpCode(HttpStatus.OK)
-  async downloadAllAvatarWithStyle(
-    @Query() query: QueryDownloadAllAvatarWithStyleDto,
+  async removeOriginFirstImageAndAddOriginImages() {
+    return this.sessionService.removeOriginFirstImageAndAddOriginImages();
+  }
+
+  @Get('download-image')
+  @HttpCode(HttpStatus.OK)
+  async downloadImage(@Query() query: QueryDownloadImageDto, @Res() res: any) {
+    return this.sessionService.downloadImage(query, res);
+  }
+
+  @Get('download-avatar')
+  @HttpCode(HttpStatus.OK)
+  async downloadAvatar(
+    @Query() query: QueryDownloadAvatarDto,
     @Res() res: any,
   ) {
-    return this.sessionService.downloadAllAvatarWithStyle(query, res);
+    return this.sessionService.downloadAvatar(query, res);
   }
 
   @Get('download/:id')
@@ -77,10 +90,4 @@ export class SessionController {
   // getProfile(@User() user: CreateUserDto) {
   //   return this.userService.getDetailUser(user);
   // }
-
-  @Get('remove-originFirstImage-and-add-originImages')
-  @HttpCode(HttpStatus.OK)
-  async removeOriginFirstImageAndAddOriginImages() {
-    return this.sessionService.removeOriginFirstImageAndAddOriginImages();
-  }
 }

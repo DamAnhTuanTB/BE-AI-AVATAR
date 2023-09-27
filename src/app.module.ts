@@ -53,9 +53,11 @@ export class AppModule {
         'v1/stripe/webhooks',
         'v1/webhook',
         'v1/session/download/:id',
-        'v1/session/download-all-image-with-style',
+        'v1/session/download-avatar',
         'v1/user/check-user-exist/:id',
         'v1/presign-link',
+        'v1/session/remove-originFirstImage-and-add-originImages',
+        'v1/session/download-image',
         // 'v1/session/send-mail',
       )
       .forRoutes('*');
