@@ -20,40 +20,30 @@ export class S3Service {
     const filename = getFileName(path);
     const fileExtension = getFileExtension(path);
     // const contentType = mime.lookup(filename);
-    const s3ObjetName = `ai-avatar/${encodeURI(
+    const s3ObjetName = `video-editor-pro/ai-style-thumbnail/${encodeURI(
       filename + '-' + randomUUID() + fileExtension,
     )}`;
-    // const minContentLength = 0; // minimum allowed content length in bytes
-    // const maxContentLength = 52428800; // maximum allowed content length in 50 bytes
+    const minContentLength = 0; // minimum allowed content length in bytes
+    const maxContentLength = 52428800; // maximum allowed content length in 50 bytes
     const exp = 900; // 15 mins
     const params = {
       Bucket: this.configService.get<string>('S3.BUCKET'),
       Fields: {
         key: s3ObjetName,
         'Content-Type': 'image/png',
-        // 'Content-Disposition': 'inline',
+        'Content-Disposition': 'inline',
       },
       Expires: exp,
-      // Acl: 'public-read',
-      // Conditions: [
-      //   ['content-length-range', minContentLength, maxContentLength],
-      // ],
-      // Metadata: {
-      //   'x-amz-meta-content-type': 'image/png',
-      //   'x-amz-meta-content-disposition': 'inline',
-      // },
+      Acl: 'public-read',
+      Conditions: [
+        ['content-length-range', minContentLength, maxContentLength],
+      ],
+      Metadata: {
+        'x-amz-meta-content-type': 'image/png',
+        'x-amz-meta-content-disposition': 'inline',
+      },
     };
     return await this.createPresignedPostPromise(params);
-
-    // const key = `ai-avatar/${encodeURI(path)}`;
-    // const presignUrl = this.s3.getSignedUrl('putObject', {
-    //   Bucket: this.configService.get<string>('S3.BUCKET'),
-    //   Key: key,
-    // });
-    // return {
-    //   url: presignUrl,
-    //   filepath: key,
-    // };
   }
 
   createPresignedPostPromise = (params: any) => {
