@@ -14,6 +14,13 @@ export enum GenderEnum {
   FEMAIL = 'female',
 }
 
+export enum TypeDownload {
+  ALL_RESULT = 'ALL_RESULT',
+  ALL_AVATAR = 'ALL_AVATAR',
+  ALL_ORIGIN_PHOTO = 'ALL_ORIGIN_PHOTO',
+  ALL_AVATAR_WITH_STYLE = 'ALL_AVATAR_WITH_STYLE',
+}
+
 export class CreateSessionDto {
   @IsNotEmpty()
   @ApiProperty({ required: true })
@@ -55,8 +62,8 @@ export class CreateSessionDto {
   @Expose()
   timePayment: string;
 
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
+  @IsOptional()
+  @ApiPropertyOptional()
   @Expose()
   results: any;
 }
@@ -106,18 +113,32 @@ export class UpdateSessionDto {
   styles: any;
 }
 
-export class QueryDownloadAllAvatarWithStyleDto {
+export class QueryDownloadAvatarDto {
   @IsNotEmpty()
   @ApiProperty({ required: true })
   @IsString()
   @Expose()
   sessionId: string;
 
+  @IsOptional()
+  @ApiPropertyOptional()
+  @IsString()
+  @Expose()
+  style: string;
+
+  @IsOptional()
+  @ApiPropertyOptional({ enum: TypeDownload, enumName: 'TypeDownload' })
+  @IsEnum(TypeDownload)
+  @Expose()
+  type: TypeDownload;
+}
+
+export class QueryDownloadImageDto {
   @IsNotEmpty()
   @ApiProperty({ required: true })
   @IsString()
   @Expose()
-  style: string;
+  url: string;
 }
 
 export class SendMailDto {
