@@ -34,6 +34,9 @@ export class Session {
   @Prop({ required: true })
   originImages: string[];
 
+  @Prop({ required: false })
+  originFirstImage: string;
+
   @Prop({
     required: true,
     enum: TypeSessionStatus,
