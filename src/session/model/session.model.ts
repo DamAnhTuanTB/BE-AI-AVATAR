@@ -32,7 +32,7 @@ export class Session {
   styles: string[];
 
   @Prop({ required: true })
-  originFirstImage: string;
+  originImages: string[];
 
   @Prop({
     required: true,

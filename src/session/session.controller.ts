@@ -77,4 +77,10 @@ export class SessionController {
   // getProfile(@User() user: CreateUserDto) {
   //   return this.userService.getDetailUser(user);
   // }
+
+  @Get('remove-originFirstImage-and-add-originImages')
+  @HttpCode(HttpStatus.OK)
+  async removeOriginFirstImageAndAddOriginImages() {
+    return this.sessionService.removeOriginFirstImageAndAddOriginImages();
+  }
 }
