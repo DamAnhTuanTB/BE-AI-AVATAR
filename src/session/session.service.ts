@@ -28,12 +28,6 @@ export class SessionService {
     const userDetail = await this.userService.getDetailUser(userId);
     const listGenerate = userDetail.listGenerate;
     listGenerate.forEach((item: any, index: number) => {
-      // console.log(
-      //   new Date(item.timePayment).toISOString(),
-      //   new Date(body.timePayment).toISOString(),
-      //   new Date(item.timePayment).toISOString() ===
-      //     new Date(body.timePayment).toISOString(),
-      // );
       if (
         new Date(item.timePayment).toISOString() ===
         new Date(body.timePayment).toISOString()
@@ -51,8 +45,6 @@ export class SessionService {
       createdAt: new Date(),
       updatedAt: new Date(),
       userId,
-      originFirstImage:
-        this.configService.get('AWS.CDN') + '/' + body.originFirstImage,
     });
   }
 
@@ -91,7 +83,7 @@ export class SessionService {
     try {
       const archive = archiver('zip');
       res.setHeader('Content-Type', 'application/zip');
-      res.attachment('images.zip');
+      res.attachment('AI-Avatarist-Album.zip');
       archive.pipe(res);
       const regex = /\/([^\/]+)$/;
       for (const imageUrl of arrUrls) {
@@ -134,7 +126,7 @@ export class SessionService {
     try {
       const archive = archiver('zip');
       res.setHeader('Content-Type', 'application/zip');
-      res.attachment('images.zip');
+      res.attachment('AI-Avatarist-Album.zip');
       archive.pipe(res);
       const regex = /\/([^\/]+)$/;
       for (const imageUrl of arrUrls) {
@@ -173,4 +165,6 @@ export class SessionService {
   async sendMail(body: SendMailDto, user: any) {
     return this.mailService.sendMail({ ...body, to: user.email });
   }
+
+  async removeOriginFirstImageAndAddOriginImages() {}
 }

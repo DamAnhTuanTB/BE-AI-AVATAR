@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Expose, Type } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import {
   IsDateString,
   IsEnum,
@@ -46,15 +46,19 @@ export class CreateSessionDto {
 
   @IsNotEmpty()
   @ApiProperty({ required: true })
-  @IsString()
   @Expose()
-  originFirstImage: string;
+  originImages: string[];
 
   @IsNotEmpty()
   @ApiProperty({ required: true })
   @IsString()
   @Expose()
   timePayment: string;
+
+  @IsNotEmpty()
+  @ApiProperty({ required: true })
+  @Expose()
+  results: any;
 }
 
 export class UpdateSessionDto {
