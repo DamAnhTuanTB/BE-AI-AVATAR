@@ -87,7 +87,7 @@ export class UserService {
     } else {
       await this.UserModel.create({
         userId,
-        email,
+        email: email?.toLowerCase,
         active: false,
         listGenerate: [
           {
