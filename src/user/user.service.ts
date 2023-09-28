@@ -108,10 +108,15 @@ export class UserService {
   async checkUserExist(userId: string) {
     const user = await this.UserModel.findOne({ userId }).lean();
 
+    const listGenerate = user.listGenerate;
+
+    const currentPayment = listGenerate.pop();
+
     if (user) {
       return {
         exists: user.active,
         email: user.email,
+        price: currentPayment.priceInfo,
       };
     } else {
       return false;
