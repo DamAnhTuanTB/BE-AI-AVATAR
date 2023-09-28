@@ -64,7 +64,9 @@ export class UserService {
 
   async updateUserWhenPaymentSuccess(body: any) {
     const { email, priceInfo, userId } = body;
-    const userByEmail = await this.UserModel.findOne({ email });
+    const userByEmail = await this.UserModel.findOne({
+      email: email?.toLowerCase,
+    });
     const userByUserId = await this.UserModel.findOne({ userId });
     if (userByUserId) {
       const listGenerate = userByUserId.listGenerate;
