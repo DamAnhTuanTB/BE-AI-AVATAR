@@ -65,7 +65,7 @@ export class UserService {
   async updateUserWhenPaymentSuccess(body: any) {
     const { email, priceInfo, userId } = body;
     const userByEmail = await this.UserModel.findOne({
-      email: email?.toLowerCase,
+      email: email?.toLowerCase(),
     });
     const userByUserId = await this.UserModel.findOne({ userId });
     if (userByUserId) {
@@ -89,7 +89,7 @@ export class UserService {
     } else {
       await this.UserModel.create({
         userId,
-        email: email?.toLowerCase,
+        email: email?.toLowerCase(),
         active: false,
         listGenerate: [
           {
@@ -111,9 +111,13 @@ export class UserService {
     const user = await this.UserModel.findOne({ userId }).lean();
 
     if (user) {
+      const listGenerate = user.listGenerate;
+
+      const currentPayment = listGenerate.pop();
       return {
         exists: user.active,
         email: user.email,
+        price: currentPayment.priceInfo,
       };
     } else {
       return false;

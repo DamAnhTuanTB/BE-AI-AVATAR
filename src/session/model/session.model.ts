@@ -32,6 +32,9 @@ export class Session {
   styles: string[];
 
   @Prop({ required: true })
+  originImages: string[];
+
+  @Prop({ required: false })
   originFirstImage: string;
 
   @Prop({

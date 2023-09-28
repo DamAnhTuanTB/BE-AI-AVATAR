@@ -72,7 +72,7 @@ export class StripeService {
       );
       const data = event?.data;
       const eventType = event.type || '';
-      console.log('eventType', eventType);
+
       switch (eventType) {
         case 'checkout.session.completed':
           const userId = data?.object?.client_reference_id || '';
