@@ -42,22 +42,22 @@ export class UserService {
 
   async getProfile(user: any) {
     const userDetail = await this.UserModel.findOne({
-      email: user.email,
+      email: user.email?.toLowerCase(),
     }).lean();
     if (userDetail) {
       await this.UserModel.updateOne(
-        { email: user.email },
+        { email: user.email?.toLowerCase() },
         { active: true, userId: user.id },
       );
     } else {
       await this.UserModel.create({
         userId: user.id,
-        email: user.email,
+        email: user.email?.toLowerCase(),
         active: true,
       });
     }
     const detailUser = await this.UserModel.findOne({
-      email: user.email,
+      email: user.email?.toLowerCase(),
     }).lean();
     return formatedResponse(detailUser);
   }
@@ -85,7 +85,10 @@ export class UserService {
         timePayment: new Date(),
         priceInfo,
       });
-      await this.UserModel.updateOne({ email }, { listGenerate, userId });
+      await this.UserModel.updateOne(
+        { email: email?.toLowerCase() },
+        { listGenerate, userId },
+      );
     } else {
       await this.UserModel.create({
         userId,
