@@ -16,7 +16,7 @@ async function bootstrap() {
   });
 
   const options = new DocumentBuilder()
-    .setTitle('API AI Avatar')
+    .setTitle('API Avatarist')
     .setDescription('')
     .setVersion('1.0')
     .addBearerAuth()

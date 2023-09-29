@@ -12,6 +12,8 @@
       * {
         color: black;
         margin: 0px;
+         max-width: 640px;
+        margin: 0 auto;
       }
       .logo {
         text-align: center;
@@ -19,6 +21,19 @@
       .logo-2 {
         text-align: center;
         margin-top: 24px;
+      }
+
+      .title {
+        color: var(--secondary-black,#262626);
+        font-family: Arial,sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 32px;
+        margin: 0 auto;
+        margin-top: 32px;
+        max-width: 640px;
+        padding: 0 64px;
+        text-align: center;
       }
       .thank-you {
         text-align: center;
@@ -33,6 +48,9 @@
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
+        padding: 0 64px;
+        margin: 0 auto;
+        margin-top: 16px;
       }
       .congrat {
         margin: 28px 0px;
@@ -55,13 +73,28 @@
         margin-bottom: 16px;
       }
       .if-you,
-      .best-regards,
+      .best-regards{
+        color: #262626;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        padding: 0 64px;
+        margin: 0 auto;
+        padding: 0 64px;
+        margin: 0 auto;
+        margin-top: 16px;
+      }
       .the-team {
         color: #262626;
         font-family: Arial, sans-serif;
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
+        padding: 0 64px;
+        margin: 0 auto;
+        padding: 0 64px;
+        margin: 0 auto;
       }
       .best-regards {
         margin-top: 28px;
@@ -71,7 +104,7 @@
       }
       .group-link {
         text-align: center;
-        margin-top: 64px;
+        margin-top: 48px;
         margin-bottom: 21px;
       }
       .group-link a {
@@ -107,11 +140,14 @@
     </style>
   </head>
   <body>
-    <div class="thank-you">
+    <div class="logo-footer">
       <img
-        src="https://dev-static.apero.vn/video-editor-pro/ai-style-thumbnail/thank-you-e4eb3a8a-aa17-4a4d-86ad-9ff323e56ba7.png"
+        src="https://dev-static.apero.vn/ai-avatar/mail-icons/ic-avatar-footer.png"
         alt=""
       />
+    </div>
+    <div class="title">
+      ✨ Your Avatar Creation is Complete! ✨
     </div>
     <div class="hello">Hello {{name}},</div>
     <div class="congrat">
@@ -150,12 +186,7 @@
         />
       </a>
     </div>
-    <div class="logo-footer">
-      <img
-        src="https://dev-static.apero.vn/ai-avatar/mail-icons/ic-avatar-footer.png"
-        alt=""
-      />
-    </div>
+    
     <div class="footer">
       VisionLab., Inc - 2 Le Van Thiem, Thanh Xuan District, Hanoi, Vietnam,
       100000

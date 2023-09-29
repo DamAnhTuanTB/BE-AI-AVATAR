@@ -26,7 +26,7 @@ import { join } from 'path';
           // },
         },
         defaults: {
-          from: 'AI Avatar <noreply@example.com>',
+          from: 'Avatarist <noreply@example.com>',
         },
         template: {
           dir: join(__dirname, 'templates'),

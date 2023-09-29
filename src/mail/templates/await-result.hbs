@@ -12,9 +12,13 @@
       * {
         color: black;
         margin: 0px;
+        max-width: 640px;
+        margin: 0 auto;
       }
       .logo {
         text-align: center;
+        padding: 0 64px;
+        margin: 0 auto;
       }
       .logo-2 {
         text-align: center;
@@ -26,14 +30,25 @@
         margin-bottom: 16px;
       }
       .hello,
-      .congrat,
+      .congrat{
+        font-family: Arial, sans-serif;
+        color: var(--secondary-black, #262626);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        padding: 0 64px;
+        margin: 0 auto;
+        margin-top: 16px;
+      }
       .download {
         font-family: Arial, sans-serif;
         color: var(--secondary-black, #262626);
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
-        text-align: center;
+        padding: 0 64px;
+        margin: 0 auto;
+        margin-top: 32px;
       }
       .congrat {
         margin: 28px 0px;
@@ -56,14 +71,25 @@
         margin-bottom: 16px;
       }
       .if-you,
-      .best-regards,
+      .best-regards {
+        color: #262626;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+            padding: 0 64px;
+        margin: 0 auto;
+        margin-top: 32px;
+      }
       .the-team {
         color: #262626;
         font-family: Arial, sans-serif;
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
-        text-align: center;
+            padding: 0 64px;
+        margin: 0 auto;
+        {{!-- margin-top: 32px; --}}
       }
       .best-regards {
         margin-top: 28px;
@@ -75,6 +101,8 @@
         text-align: center;
         margin-top: 64px;
         margin-bottom: 21px;
+        margin-top: 48px;
+        text-align: center;
       }
       .group-link a {
         text-decoration: none;
@@ -88,6 +116,8 @@
       }
       .logo-footer {
         text-align: center;
+        max-width: 640px;
+        margin: 0 auto;
         margin-top: 21px;
         margin-bottom: 16px;
       }
@@ -106,16 +136,40 @@
       .footer {
         margin-top: 16px;
       }
+      .title {
+        color: var(--secondary-black,#262626);
+        font-family: Arial,sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 32px;
+        margin: 0 auto;
+        margin-top: 32px;
+        max-width: 640px;
+        padding: 0 64px;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
-    <div class="hello">
-      Your AI Avatar is currently being created. We'll notify you by email once
-      it's ready. You can also check your avatar's status on your account page.
+    <div class="logo-footer">
+      <img
+        src="https://dev-static.apero.vn/ai-avatar/mail-icons/ic-avatar-footer.png"
+        alt=""
+        class="logo"
+      />
     </div>
+    <div class="title">
+      Generating your email...
+    </div>
+    
     <div class="congrat">
       Thanks for choosing us!
     </div>
+    <div class="hello">
+      Your Avatarist is currently being created. We'll notify you by email once
+      it's ready. You can also check your avatar's status on your account page.
+    </div>
+    
     <div class="best-regards">Best regards,</div>
     <div class="the-team">The Avatarist Team</div>
     <div class="group-link">
@@ -139,12 +193,12 @@
         />
       </a>
     </div>
-    <div class="logo-footer">
+    {{!-- <div class="logo-footer">
       <img
         src="https://dev-static.apero.vn/ai-avatar/mail-icons/ic-avatar-footer.png"
         alt=""
       />
-    </div>
+    </div> --}}
     <div class="footer">
       VisionLab., Inc - 2 Le Van Thiem, Thanh Xuan District, Hanoi, Vietnam,
       100000

@@ -22,7 +22,7 @@ export class WebhookService {
 
         this.mailService.sendMail({
           to: sessionDetail.email,
-          subject: 'AI Avatar - Your Result',
+          subject: 'Avatarist - Your Result',
           template: './result',
           context: {
             name: sessionDetail.name,
