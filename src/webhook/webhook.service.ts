@@ -22,13 +22,11 @@ export class WebhookService {
 
         this.mailService.sendMail({
           to: sessionDetail.email,
-          subject: 'Avatarist - Your Result',
+          subject: '✨ Your Avatar Creation is Complete! ✨',
           template: './result',
           context: {
             name: sessionDetail.name,
-            urlDownload: `${this.configService.get(
-              'API_SERVER',
-            )}/v1/session/download/${body.sessionId}`,
+            urlDownload: `${this.configService.get('CLIENT_URL')}/my-avatar`,
           },
         });
 
