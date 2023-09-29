@@ -26,7 +26,7 @@ export class WebhookService {
           template: './result',
           context: {
             name: sessionDetail.name,
-            urlDownload: `${this.configService.get('CLIENT_URL')}/my-avatar`,
+            urlDownload: `${this.configService.get('CLIENT_URI')}/my-avatar`,
           },
         });
 
