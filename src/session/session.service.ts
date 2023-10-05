@@ -1,14 +1,8 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { formatedResponse, handleError } from 'src/utils';
 import { SessionDocument } from './model/session.model';
-import * as fs from 'fs';
 import {
   CreateSessionDto,
   QueryDownloadAvatarDto,
