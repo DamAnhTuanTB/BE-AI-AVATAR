@@ -71,8 +71,8 @@ export class SessionController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async getDetailSession(@Param('id') id: string) {
-    return this.sessionService.getDetailSession(id);
+  async getDetailSession(@Param('id') id: string, @Req() req: any) {
+    return this.sessionService.getDetailSessionOfUser(id, req.query.userId);
   }
 
   @Get('')

@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { formatedResponse, handleError } from 'src/utils';
@@ -51,8 +56,22 @@ export class SessionService {
     });
   }
 
+  async getDetailSessionOfUser(sessionId: string, userId: string) {
+    try {
+      const sessionDetail = await this.SessionModel.findOne({
+        sessionId,
+        userId,
+      }).lean();
+      return formatedResponse(sessionDetail);
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
+
   async getDetailSession(sessionId: string) {
-    const sessionDetail = await this.SessionModel.findOne({ sessionId }).lean();
+    const sessionDetail = await this.SessionModel.findOne({
+      sessionId,
+    }).lean();
     return formatedResponse(sessionDetail);
   }
 
@@ -118,6 +137,7 @@ export class SessionService {
       archive.pipe(res);
       const regex = /\/([^\/]+)$/;
       for (const imageUrl of arrUrls) {
+        console.log(imageUrl);
         const response = await axios.get(imageUrl, {
           responseType: 'arraybuffer',
         });
@@ -127,6 +147,7 @@ export class SessionService {
           const match = imageUrl.match(regex);
           const imageName = match[1];
           archive.append(imageBuffer, { name: imageName });
+          console.log(response.data);
         } else {
           console.error(
             `Error download ${imageUrl}, status code: ${response.status}`,
