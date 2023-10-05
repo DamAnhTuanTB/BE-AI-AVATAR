@@ -131,27 +131,28 @@ export class SessionService {
       archive.pipe(res);
       const regex = /\/([^\/]+)$/;
       for (const imageUrl of arrUrls) {
-        console.log(imageUrl);
-        const response = await axios.get(imageUrl, {
-          responseType: 'arraybuffer',
-        });
+        try {
+          const response = await axios.get(imageUrl, {
+            responseType: 'arraybuffer',
+          });
 
-        if (response.status === 200) {
-          const imageBuffer = response.data; // Dữ liệu tệp ảnh dưới dạng mảng byte
-          const match = imageUrl.match(regex);
-          const imageName = match[1];
-          archive.append(imageBuffer, { name: imageName });
-          console.log(response.data);
-        } else {
-          console.error(
-            `Error download ${imageUrl}, status code: ${response.status}`,
-          );
+          if (response.status === 200) {
+            const imageBuffer = response.data; // Dữ liệu tệp ảnh dưới dạng mảng byte
+            const match = imageUrl.match(regex);
+            const imageName = match[1];
+            archive.append(imageBuffer, { name: imageName });
+          } else {
+            console.error(
+              `Error download ${imageUrl}, status code: ${response.status}`,
+            );
+          }
+        } catch (error) {
+          console.log(error);
         }
       }
-
       archive.finalize();
     } catch (error) {
-      handleError(error);
+      console.log(error);
     }
   }
 
